@@ -1,9 +1,16 @@
 import redis from 'redis';
-// Create a client and connect to Redis server
-const url = 'redis://localhost:6379';
+const url = 'redis://127.0.0.1:6379';
+console.log("Session Reached");
 const RedisClient = redis.createClient({
-    url
+    url,
+    pingInterval: 4 * 60 * 1000
 });
-RedisClient.connect();
+RedisClient.on('error', err => console.log(`Success Message and variables: ${err}`));
+RedisClient.on('reconnecting', params => console.log(`Error Message : ${params}`));
+RedisClient.on('connect', () => console.log('Redis connected'));
+RedisClient.on('ready', () => console.log('Redis ready'));
+RedisClient.on('end', () => console.log('Redis connection closed'));
+await RedisClient.connect();
+console.log("Connected");
 export { RedisClient };
 //# sourceMappingURL=DB.js.map

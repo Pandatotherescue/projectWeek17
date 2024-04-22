@@ -144,6 +144,7 @@ routes.get('/upload/Auction/:ItemId', async (req, res) => {
 
 // #6	
 // Som user skal man kunne byde på et item.
+
 /*
 routes.post('/bid', async (req, res) => {
    let bid: Bid = req.body;
