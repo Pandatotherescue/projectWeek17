@@ -4,8 +4,14 @@ export interface Item{
     description:string;
     startPrice:number;
     actualPrice:number;
-    expires:Date;
-    active:boolean;
+    expires:Date; 
+    category: Enumerator;
+    image: string;
+    
+    active:boolean; // Status
+    
+    
+    winner:string;
 };
 
   

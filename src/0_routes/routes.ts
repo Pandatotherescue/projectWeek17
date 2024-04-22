@@ -18,6 +18,7 @@ routes.use(bodyParser.json())
 
 import { Bid } from '../3_models/Bid.js';
 import { Item } from '../3_models/Item.js';
+import { AuctionEmailList } from '../3_models/AuctionEmail.js';
 
 const createDirectory = (dir: string) => {
    try {
@@ -96,18 +97,59 @@ routes.post('/upload/:itemID', upload.single('picture'), (req, res) => {
 // #4
 // Som user skal man kunne se alle udbudte items
 //TODO Husk at billederne også skal med :-)
+routes.get('/bids/', async (req, res) => {
+  try { 
+    const bids = await RedisClient.LRANGE(`bids:`,0,-1);
+    // Convert the stringified bids back to JSON objects
+    const bidObjects = bids.map(bid => JSON.parse(bid));
 
+    res.status(200).json(bidObjects);
+  } catch (error) {
+    console.error('Error fetching bids:', error);
+    res.status(500).send('Error fetching bids');
+  }
+});
 // #5
 // Som user skal man kunne tilmelde sig auktionen med sin email som brugernavn
 // TODO
 
+routes.post('/upload/Auction/:ItemId', async (req, res) => {
+  let item: AuctionEmailList = req.body;
+  
+  try {
+    // Store the item in a Redis list under the key items'
+    await RedisClient.LPUSH(`AuctionEmailList`, JSON.stringify(item));
+
+    res.status(201).send('Item placed successfully');
+  } catch (error) {
+    console.error('Error placing item:', error);
+    res.status(500).send('Error placing item');
+  }
+});
+routes.get('/upload/Auction/:ItemId', async (req, res) => {
+  const {ItemId} = req.params;
+  try { 
+    const bids = await RedisClient.LRANGE(`AuctionEmailList:${ItemId}`, 0, -1);
+    // Convert the stringified bids back to JSON objects
+    const bidObjects = bids.map(bid => JSON.parse(bid));
+
+    res.status(200).json(bidObjects);
+  } catch (error) {
+    console.error('Error fetching bids:', error);
+    res.status(500).send('Error fetching bids');
+  }
+});
+
+
 
 // #6	
 // Som user skal man kunne byde på et item.
+/*
 routes.post('/bid', async (req, res) => {
    let bid: Bid = req.body;
    bid.timestamp = new Date(); // Set the current timestamp
- 
+  
+   if(bid.itemId.valueOf() == RedisClient.LRANGE())
    // TODO:
    // Hvis auktionen er udløbet skal dette item sættes til inaktivt
    // Og buddet skal ikke gemmes.
@@ -122,6 +164,7 @@ routes.post('/bid', async (req, res) => {
      res.status(500).send('Error placing bid');
    }
  });
+ */
 
 
 // The default (all other not valid routes)
