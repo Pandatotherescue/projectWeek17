@@ -3,7 +3,8 @@ import {routes} from './0_routes/routes.js';
 
 
 
-const port = process.env.PORT;
+//const port = process.env.PORT;
+const port = 3000;
 console.log(port);
 
 const server = routes.listen(port, () =>{
