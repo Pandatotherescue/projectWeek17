@@ -145,12 +145,10 @@ routes.get('/upload/Auction/:ItemId', async (req, res) => {
 // #6	
 // Som user skal man kunne byde på et item.
 
-/*
+
 routes.post('/bid', async (req, res) => {
    let bid: Bid = req.body;
    bid.timestamp = new Date(); // Set the current timestamp
-  
-   if(bid.itemId.valueOf() == RedisClient.LRANGE())
    // TODO:
    // Hvis auktionen er udløbet skal dette item sættes til inaktivt
    // Og buddet skal ikke gemmes.
@@ -165,7 +163,7 @@ routes.post('/bid', async (req, res) => {
      res.status(500).send('Error placing bid');
    }
  });
- */
+ 
 
 
 // The default (all other not valid routes)
