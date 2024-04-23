@@ -4,7 +4,7 @@ import {routes} from './0_routes/routes.js';
 
 
 const port = process.env.PORT;
-
+console.log(port);
 
 const server = routes.listen(port, () =>{
     console.log('This server is listening at port:' + port);
