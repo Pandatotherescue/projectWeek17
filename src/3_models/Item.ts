@@ -1,17 +1,22 @@
 export interface Item{
-    itemId: number;
-    title: string;
-    description:string;
-    startPrice:number;
-    actualPrice:number;
-    expires:Date; 
-    category: Enumerator;
+    id: number;
     image: string;
-    
-    active:boolean; // Status
-    
-    
+    title: string;
+    artist: String;
+    artTitle: String;
+    description:string;
+    category: Enumerator;
+    startPrice:number;
+    currentPrice:number;
+    expiryDate:Date;
+    timeLeft:Date;
+    active: Boolean
     winner:string;
+
+    
+    
+    
+   
 };
 
   

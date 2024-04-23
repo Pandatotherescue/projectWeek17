@@ -1,5 +1,5 @@
 import {routes} from './0_routes/routes.js';
-
+//netstat -ano | find "LISTENING" | find "3000" find process on port
 
 
 
