@@ -67,6 +67,18 @@ const storage = multer.diskStorage({
   }
 });
 
+routes.get('/items', async (req, res) => {
+  try {
+    // Store the item in a Redis list under the key items'
+    const bids = await RedisClient.LRANGE(`items}`, 0, -1);
+
+    res.status(201).send('Items retrieved successfully');
+  } catch (error) {
+    console.error('Error retriving items:', error);
+    res.status(500).send('Error retriving items');
+  }
+});
+
 // #2
 // Som admin skal man kunne tilføje et billede til et allerede oprettet item.
 // Bemærk denne funktion skal måske være samlet med Item-oprettelsen
