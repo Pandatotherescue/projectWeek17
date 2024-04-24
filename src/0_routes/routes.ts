@@ -70,9 +70,10 @@ const storage = multer.diskStorage({
 routes.get('/items', async (req, res) => {
   try {
     // Store the item in a Redis list under the key items'
-    const bids = await RedisClient.LRANGE(`items}`, 0, -1);
+    const items = await RedisClient.LRANGE(`items}`, 0, -1);
+    const ItemObjects = items.map(item => JSON.parse(item));
 
-    res.status(201).send('Items retrieved successfully');
+    res.status(200).json(ItemObjects);
   } catch (error) {
     console.error('Error retriving items:', error);
     res.status(500).send('Error retriving items');
